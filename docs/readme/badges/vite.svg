@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="98" height="34" viewBox="0 0 98 34" role="img" aria-label="Vite 8.3.8">
+  <rect x=".5" y="2.5" width="97" height="29" rx="14.5" fill="#261d31" stroke="#5d4771"/>
+  <circle cx="14" cy="17" r="3" fill="#ffcb70"/>
+  <text x="24" y="21.5" fill="#faf3ff" font-family="system-ui, sans-serif" font-size="12" font-weight="650">Vite 8.3.8</text>
+</svg>
