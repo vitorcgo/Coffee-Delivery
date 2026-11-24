@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from '../components/Button'
 import { CoffeeImage } from '../components/CoffeeImage'
@@ -12,10 +13,11 @@ import { CHECKOUT_FORM_ID } from './CheckoutForm'
 export function CartSummary() {
   const { items, dispatch } = useCart()
   const { subtotal, delivery, total } = getCartTotals(items)
+  const heading = useRef<HTMLHeadingElement>(null)
 
   return (
     <section aria-labelledby="cart-heading">
-      <h2 id="cart-heading" className="checkout-heading">Cafés selecionados</h2>
+      <h2 id="cart-heading" className="checkout-heading" ref={heading} tabIndex={-1}>Cafés selecionados</h2>
       <div className="cart-summary">
         {items.length === 0 ? (
           <div className="flex flex-col gap-4">
@@ -36,7 +38,10 @@ export function CartSummary() {
                         <p>{coffee.name}</p>
                         <div className="cart-line-controls flex flex-wrap gap-2">
                           <QuantityInput compact product={coffee.name} value={quantity} max={MAX_QUANTITY} onChange={(value) => dispatch({ type: 'quantity', coffeeId, quantity: value })} />
-                          <Button variant="secondary" aria-label={'Remover ' + coffee.name} onClick={() => dispatch({ type: 'remove', coffeeId })}>
+                          <Button variant="secondary" aria-label={'Remover ' + coffee.name} onClick={(event) => {
+                            if (event.detail === 0) heading.current?.focus()
+                            dispatch({ type: 'remove', coffeeId })
+                          }}>
                             <DesignIcon name="trash" className="icon-default" />
                             <DesignIcon name="trash-hover" className="icon-hover" />
                             Remover

@@ -1,3 +1,4 @@
+import type { ChangeEvent, KeyboardEvent } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { DesignIcon } from '../components/DesignIcon'
@@ -15,6 +16,30 @@ export function CheckoutForm({ onConfirm }: { onConfirm: (details: CheckoutDetai
   const cep = register('cep')
   const state = register('state')
 
+  function changeCep(event: ChangeEvent<HTMLInputElement>) {
+    const input = event.currentTarget
+    const formatted = formatCep(input.value)
+
+    if (formatted !== input.value) {
+      const beforeCursor = input.value.slice(0, input.selectionStart ?? input.value.length)
+      const digits = beforeCursor.replace(/\D/g, '').length
+      const cursor = Math.min(digits + (digits > 5 ? 1 : 0), formatted.length)
+
+      input.value = formatted
+      input.setSelectionRange(cursor, cursor)
+    }
+
+    void cep.onChange(event)
+  }
+
+  function skipCepSeparator(event: KeyboardEvent<HTMLInputElement>) {
+    const input = event.currentTarget
+    if (input.selectionStart !== input.selectionEnd || input.value[5] !== '-') return
+
+    if (event.key === 'Backspace' && input.selectionStart === 6) input.setSelectionRange(5, 5)
+    if (event.key === 'Delete' && input.selectionStart === 5) input.setSelectionRange(6, 6)
+  }
+
   return (
     <form id={CHECKOUT_FORM_ID} className="flex flex-col gap-3" noValidate onSubmit={handleSubmit(onConfirm)}>
       <section className="form-panel flex flex-col" aria-labelledby="delivery-heading">
@@ -26,10 +51,7 @@ export function CheckoutForm({ onConfirm }: { onConfirm: (details: CheckoutDetai
           </div>
         </div>
         <div className="address-grid grid">
-          <AddressField className="address-cep" label="CEP" autoComplete="postal-code" inputMode="numeric" maxLength={9} error={errors.cep?.message} {...cep} onChange={(event) => {
-            event.currentTarget.value = formatCep(event.currentTarget.value)
-            void cep.onChange(event)
-          }} />
+          <AddressField className="address-cep" label="CEP" autoComplete="postal-code" inputMode="numeric" error={errors.cep?.message} {...cep} onChange={changeCep} onKeyDown={skipCepSeparator} />
           <AddressField className="address-street" label="Rua" autoComplete="address-line1" maxLength={120} error={errors.street?.message} {...register('street')} />
           <AddressField className="address-number" label="Número" maxLength={12} error={errors.number?.message} {...register('number')} />
           <AddressField className="address-complement" label="Complemento" autoComplete="address-line2" maxLength={80} optional error={errors.complement?.message} {...register('complement')} />

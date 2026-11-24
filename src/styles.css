@@ -282,6 +282,7 @@
   .address-field input::placeholder { color: var(--label); opacity: 1; }
   .address-field input:focus { border-color: var(--color-yellow-dark); outline: none; }
   .address-field input[aria-invalid="true"] { border-color: var(--error); }
+  .address-field input[aria-invalid="true"]:focus-visible { outline: 2px solid var(--color-yellow-dark); outline-offset: 2px; }
   .address-optional { position: absolute; top: 50%; right: 12px; transform: translateY(-50%); color: var(--label); font-size: 12px; font-style: italic; pointer-events: none; }
   .address-field:has(.address-optional) input:placeholder-shown { padding-right: 65px; }
   .address-field input:not(:placeholder-shown) + .address-optional { display: none; }
