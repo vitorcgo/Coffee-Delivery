@@ -11,8 +11,8 @@ Coffee Delivery é uma cafeteria fictícia com um catálogo de cafés e um fluxo
 | RF01 | Exibir o catálogo | O início exibe as 14 bebidas do protótipo com foto, nome, categorias, descrição e preço. |
 | RF02 | Adicionar cafés | O visitante escolhe a quantidade por produto. A adição acumula quantidades e atualiza o contador do cabeçalho. |
 | RF03 | Editar o carrinho | O checkout permite aumentar, diminuir e remover itens, com recálculo de subtotal, entrega e total. |
-| RF04 | Recuperar o carrinho | Uma recarga no mesmo navegador preserva os produtos e as quantidades válidas. |
-| RF05 | Validar a entrega | O formulário exige CEP, rua, número, bairro, cidade, UF e forma de pagamento. Campo inválido recebe uma mensagem específica. |
+| RF04 | Recuperar o carrinho | Uma recarga preserva os produtos e as quantidades válidas. Abas abertas no mesmo navegador acompanham as alterações no carrinho. |
+| RF05 | Validar a entrega | O formulário exige CEP, rua, número, bairro, cidade, UF e forma de pagamento. O campo de CEP aceita colagem com pontuação. Campo inválido recebe uma mensagem específica. |
 | RF06 | Escolher o pagamento | O visitante seleciona crédito, débito ou dinheiro. O controle exibe a opção ativa e aceita navegação por teclado. |
 | RF07 | Confirmar o pedido | Um carrinho com itens e dados válidos é limpo na confirmação. A tela de sucesso mostra endereço, previsão e pagamento. |
 | RF08 | Alternar o tema | O controle do cabeçalho alterna entre claro e escuro. A preferência persiste após a recarga. |
@@ -24,7 +24,7 @@ Coffee Delivery é uma cafeteria fictícia com um catálogo de cafés e um fluxo
 | RNF01 | Stack e arquitetura | React, Vite 8, TypeScript, Tailwind CSS, React Router, Context API, `useReducer`, hooks e props. |
 | RNF02 | Identidade visual | O tema claro segue a composição, tipografia, paleta e variantes do Style Guide. O cabeçalho e o favicon usam um símbolo original gerado por IA. |
 | RNF03 | Responsividade | Catálogo, checkout e confirmação refluem em desktop, tablet e celular. A largura de 320 px continua navegável sem rolagem horizontal. |
-| RNF04 | Acessibilidade | Campos e controles têm nomes acessíveis, foco visível e operação por teclado. Erros são associados aos campos. |
+| RNF04 | Acessibilidade | Campos e controles têm nomes acessíveis, foco visível e operação por teclado. Erros são associados aos campos. Ao remover um café pelo teclado, o foco permanece no resumo do carrinho. |
 | RNF05 | Entrega técnica | O repositório inclui build reproduzível, testes, especificações, instruções para Vercel e histórico de commits semânticos. |
 | RNF06 | Uso responsável de IA | A documentação registra as contribuições de IA no planejamento, desenvolvimento, revisão e verificação. As evidências usam dados fictícios. |
 

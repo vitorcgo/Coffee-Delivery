@@ -28,7 +28,7 @@ npm run test:e2e
 npm run build
 ```
 
-A verificação cobre oito testes unitários e quatro cenários no navegador. As capturas abaixo foram feitas com o build local e dados fictícios.
+A verificação cobre oito testes unitários e sete cenários no navegador, incluindo carrinho em duas abas, armazenamento indisponível, edição do CEP e navegação por teclado. As capturas abaixo foram feitas com o build local e dados fictícios.
 
 | Tela | Captura |
 | --- | --- |

@@ -18,20 +18,20 @@ A aplicação roda inteiramente no navegador. O Vite 8 produz um diretório est�
 - `Button` tem variantes primária, secundária e de ícone. `DesignIcon` renderiza os SVGs exportados do Figma.
 - `Header` compõe a marca, o tema, a localização e o carrinho com selo condicional.
 - `QuantityInput` recebe quantidade, limites e callback por props. `CatalogCard` e `CartSummary` reutilizam esse controle e `CoffeeImage`.
-- `AddressField` reúne rótulo, entrada, indicação opcional e erro. `CheckoutForm` usa um grupo de radios nativos com a aparência do Select do guia.
+- `AddressField` reúne rótulo, entrada, indicação opcional e erro. Campos inválidos preservam a borda de erro e usam a cor de foco do Style Guide no contorno. `CheckoutForm` usa um grupo de radios nativos com a aparência do Select do guia.
 - `FeatureIcon` padroniza os ícones circulares da introdução e da confirmação.
 
 ## Estado e persistência
 
 | Informação | Onde vive | Comportamento |
 | --- | --- | --- |
-| Itens do carrinho | `CartProvider`, via Context API e `useReducer` | O reducer adiciona, altera, remove e limpa itens. Um efeito grava o array em `coffee-delivery:cart:v1`. A hidratação descarta entradas inválidas e consolida produtos repetidos. |
+| Itens do carrinho | `CartProvider`, via Context API e `useReducer` | O reducer adiciona, altera, remove e limpa itens. Alterações locais gravam o array em `coffee-delivery:cart:v1`. Cada aba consulta a versão gravada antes de aplicar uma ação e recebe atualizações pelo evento `storage`. A hidratação descarta entradas inválidas e consolida produtos repetidos. |
 | Pedido confirmado | `CartProvider` | Uma transição registra endereço e pagamento em memória e esvazia o carrinho. |
 | Quantidade antes de adicionar | `CatalogCard`, via `useState` | Reinicia em uma unidade depois de adicionar. O máximo respeita as unidades já presentes no carrinho. |
-| Campos de entrega | `CheckoutForm`, via `useForm` | O formulário valida na confirmação e trata CEP, UF e complemento junto com o método de pagamento. |
+| Campos de entrega | `CheckoutForm`, via `useForm` | O formulário valida na confirmação e trata CEP, UF e complemento junto com o método de pagamento. A máscara do CEP formata até oito dígitos e preserva a posição lógica do cursor ao editar. |
 | Tema | `ThemeToggle`, via `useState` e `useLayoutEffect` | Aplica `data-theme` no HTML e grava `coffee-delivery:theme`. Começa em tema claro sem preferência registrada. |
 
-O catálogo é imutável por convenção e identifica cada produto por ID. Os valores são calculados em centavos inteiros. O armazenamento do navegador contém apenas as quantidades do carrinho e o tema. Se o armazenamento estiver indisponível, o fluxo funciona em memória.
+O catálogo é imutável por convenção e identifica cada produto por ID. Os valores são calculados em centavos inteiros. O armazenamento do navegador contém apenas as quantidades do carrinho e o tema. Se o armazenamento estiver indisponível, o fluxo funciona em memória. Em gravações simultâneas, as abas convergem para o último carrinho gravado.
 
 ## Implementação do Figma
 
@@ -51,6 +51,6 @@ O cabeçalho usa a nova logo de IA e acrescenta o controle de tema. O Dark Mode,
 ## Estratégia de testes
 
 - Vitest cobre transições do carrinho, limites, dados persistidos, totais e validação do checkout.
-- Playwright em Chromium cobre catálogo, persistência, edição, remoção, formulário inválido, finalização, rotas e tema. Os testes verificam largura sem overflow em 320 e 768 px.
+- Playwright em Chromium cobre catálogo, persistência, sincronização entre abas, armazenamento indisponível, edição, foco após remoção por teclado, colagem e edição de CEP, formulário inválido, finalização, rotas e tema. Os testes verificam largura sem overflow em 320 e 768 px.
 - `npm run build` combina a verificação de tipos com o empacotamento de produção.
 - A conferência visual usa o protótipo desktop de 1440 px e capturas do produto no navegador. As imagens do README mostram a execução com dados fictícios.

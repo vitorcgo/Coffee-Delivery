@@ -11,6 +11,7 @@
 | 7 | Executar testes, comparar telas e registrar evidências | Fluxo completo | Concluída |
 | 8 | Configurar deploy e documentar a entrega | Build de produção | Concluída |
 | 9 | Publicar o repositório na Vercel e verificar a URL | Importação do repositório na conta do responsável | A cargo do responsável |
+| 10 | Corrigir sincronização do carrinho, colagem de CEP e foco após remoção | Revisão do fluxo de compra no navegador | Concluída |
 
 ## Revisões de entrega
 
