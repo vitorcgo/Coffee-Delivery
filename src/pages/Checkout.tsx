@@ -1,19 +1,19 @@
-import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import { Navigate } from 'react-router-dom'
 import { CartSummary } from '../checkout/CartSummary'
 import { CheckoutForm } from '../checkout/CheckoutForm'
 import type { CheckoutDetails } from '../checkout/checkoutSchema'
 import { useCart } from '../store/CartContext'
 
 export function Checkout() {
-  const { items, dispatch } = useCart()
-  const navigate = useNavigate()
+  const { items, order, dispatch } = useCart()
+  const [orderAtEntry] = useState(order)
 
   function confirmOrder(details: CheckoutDetails) {
-    if (!items.length) return
-
     dispatch({ type: 'complete', details })
-    void navigate('/success', { replace: true })
   }
+
+  if (order && order !== orderAtEntry) return <Navigate to="/success" replace />
 
   return (
     <main id="conteudo" tabIndex={-1} className="page-width checkout-grid grid">
